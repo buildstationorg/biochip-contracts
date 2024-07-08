@@ -7,12 +7,12 @@ import { BioChipKaia } from "src/BioChipKaia.sol";
 
 
 contract Deploy is Script {
-    function run() external returns (DeployHelper, BioChipKaia) {
+    function run() external returns (DeployConfig, BioChipKaia) {
         /// @dev initialize the DeployConfig contract
-        DeployConfig deplyConfig = new DeployConfig();
+        DeployConfig deployConfig = new DeployConfig();
 
         /// @dev get the active network configuration using the DeployConfig contract
-        (uint256 intialFee, address initialOwner) = deployHelper.activeNetworkConfig();
+        (uint256 intialFee, address initialOwner) = deployConfig.activeNetworkConfig();
 
         /// @dev start the broadcast
         vm.startBroadcast();
@@ -23,7 +23,7 @@ contract Deploy is Script {
         /// @dev stop the broadcast
         vm.stopBroadcast();
 
-        /// @dev return the BioChipKaia and DeployHelper contracts
+        /// @dev return the BioChipKaia and DeployConfig contracts
         return (deployConfig, bioChipKaia);
     }
 }
