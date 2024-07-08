@@ -16,11 +16,11 @@ contract BioChipKaiaTest is Test {
         bioChipKaia = new BioChipKaia(5 ether, OWNER);
     }
 
-    function test_Owner() public view {
+    function test_Owner() public {
         assertEq(bioChipKaia.owner(), OWNER);
     }
 
-    function test_StartingBalance() public view {
+    function test_StartingBalance() public {
         assertEq(bioChipKaia.getBalance(), 0 ether);
     }
 

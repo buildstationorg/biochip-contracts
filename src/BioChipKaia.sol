@@ -10,10 +10,17 @@ error InvalidTokenId(uint256 tokenId);
 error InsufficientValueToMint();
 error WithdrawalFailed();
 
+/// @title buildstation BioChipKaia contract
+/// @author zxstim
+/// @notice You can use this contract for only the most basic simulation
+/// @dev All function calls are currently implemented without side effects
 contract BioChipKaia is ERC721, Ownable {
     uint256 private counter;
     uint256 private fee;
 
+    /// @notice Constructor to create a BioChipKaia
+    /// @param initialFee the initial fee to mint a token in native token
+    /// @param initialOwner the initial owner of the contract
     constructor(
         uint256 initialFee,
         address initialOwner
@@ -21,6 +28,7 @@ contract BioChipKaia is ERC721, Ownable {
         fee = initialFee;
     }
 
+    /// @notice Mint function to mint buildstation BioChipKaia NFT
     function mint() public payable {
         if (msg.value < fee) {
             revert InsufficientValueToMint();
@@ -29,10 +37,15 @@ contract BioChipKaia is ERC721, Ownable {
         _safeMint(msg.sender, counter);
     }
 
+    /// @notice internal pure function set the base URI
+    /// @return BaseURI which is a string
     function _baseURI() internal pure override returns (string memory) {
         return "data:application/json;base64,";
     }
 
+    /// @notice function to set the token URI
+    /// @param _tokenId the token id which is set by the counter
+    /// @return TokenURI which is a base64 string with the SVG image encoded as a base64 string
     function tokenURI(
         uint _tokenId
     ) public view override returns (string memory) {
@@ -64,14 +77,26 @@ contract BioChipKaia is ERC721, Ownable {
         return string(abi.encodePacked(_baseURI(), json));
     }
 
+    /// @notice function to get the balance of the contract
+    /// @return current balance of the contract
     function getBalance() public view returns (uint256) {
         return address(this).balance;
     }
 
+    /// @notice function to get the counter
+    /// @return counter which can be set as tokenId
     function getCounter() public view returns (uint256) {
         return counter;
     }
 
+    /// @notice function to get the fee
+    /// @return fee which is current minting fee
+    function getFee() public view returns (uint256) {
+        return fee;
+    }
+
+    /// @notice function to withdraw the mint fee
+    /// @notice onlyOwner can withdraw the mint fee
     function withdrawFee() public onlyOwner {
         (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
         if (callSuccess == false) {
@@ -79,6 +104,9 @@ contract BioChipKaia is ERC721, Ownable {
         }
     }
 
+    /// @notice function to set the mint fee
+    /// @notice onlyOwner can set the mint fee
+    /// @param newFee as the new fee to mint a token in native token
     function setFee(uint256 newFee) public onlyOwner {
         fee = newFee;
     }
