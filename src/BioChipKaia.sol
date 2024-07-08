@@ -79,7 +79,7 @@ contract BioChipKaia is ERC721, Ownable {
         }
     }
 
-    function setFee(uint256 newFee) public payable onlyOwner {
+    function setFee(uint256 newFee) public onlyOwner {
         fee = newFee;
     }
 }

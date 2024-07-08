@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.25;
 
-import "lib/forge-std/src/Test.sol";
+import "forge-std/Test.sol";
 import { BioChipKaia } from "src/BioChipKaia.sol";
 
 contract BioChipKaiaTest is Test {
@@ -16,11 +16,11 @@ contract BioChipKaiaTest is Test {
         vm.deal(OWNER, 1 ether);
     }
 
-    function test_Owner() public view {
+    function test_Owner() public {
         assertEq(bioChipKaia.owner(), OWNER);
     }
 
-    function test_StartingBalance() public view {
+    function test_StartingBalance() public {
         assertEq(bioChipKaia.getBalance(), 0 ether);
     }
 
