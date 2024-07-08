@@ -44,7 +44,7 @@ contract BioChipKaia is ERC721, Ownable {
             bytes(
                 string(
                     abi.encodePacked(
-                        '{"name": "BioChip #: ',
+                        '{"name": "BioChip #',
                         Strings.toString(_tokenId),
                         '", "description": "BioChip is the entry point to buildstation community stored entirely onchain.", "image": "data:image/SVG+xml;base64,',
                         Base64.encode(

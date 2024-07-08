@@ -5,22 +5,22 @@ import "forge-std/Test.sol";
 import { BioChipKaia } from "src/BioChipKaia.sol";
 
 contract BioChipKaiaTest is Test {
-    BioChipKaia public bioChipKaia;
+    BioChipKaia bioChipKaia;
     address constant OWNER = 0xe3d25540BA6CED36a0ED5ce899b99B5963f43d3F;
     uint256 constant SEND_VALUE = 5 ether;
     address bob = makeAddr("bob");
 
     function setUp() public {
-        bioChipKaia = new BioChipKaia(5 ether, OWNER);
         vm.deal(bob, 100 ether);
         vm.deal(OWNER, 1 ether);
+        bioChipKaia = new BioChipKaia(5 ether, OWNER);
     }
 
-    function test_Owner() public {
+    function test_Owner() public view {
         assertEq(bioChipKaia.owner(), OWNER);
     }
 
-    function test_StartingBalance() public {
+    function test_StartingBalance() public view {
         assertEq(bioChipKaia.getBalance(), 0 ether);
     }
 
