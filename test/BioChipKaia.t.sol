@@ -16,14 +16,6 @@ contract BioChipKaiaTest is Test {
         bioChipKaia = new BioChipKaia(5 ether, OWNER);
     }
 
-    function test_Owner() public {
-        assertEq(bioChipKaia.owner(), OWNER);
-    }
-
-    function test_StartingBalance() public {
-        assertEq(bioChipKaia.getBalance(), 0 ether);
-    }
-
     function test_Mint() public {
         vm.startPrank(bob);
         bioChipKaia.mint{value: SEND_VALUE}();

@@ -29,7 +29,7 @@ contract DeployConfig is Script {
         returns (NetworkConfig memory kairosNetworkConfig)
     {
         kairosNetworkConfig = NetworkConfig({
-            initialFee: 5 ether,
+            initialFee: 1 ether,
             initialOwner: 0xe3d25540BA6CED36a0ED5ce899b99B5963f43d3F
         });
     }
@@ -40,7 +40,7 @@ contract DeployConfig is Script {
         returns (NetworkConfig memory kaiaNetworkConfig)
     {
         kaiaNetworkConfig = NetworkConfig({
-            initialFee: 5 ether,
+            initialFee: 1 ether,
             initialOwner: 0x439aa01146DEB050881a254c7490c7f466e4D88d
         });
     }
@@ -53,7 +53,7 @@ contract DeployConfig is Script {
 
       /// @dev return the network configuration with the mock data feed
         anvilNetworkConfig = NetworkConfig({
-            initialFee: 5 ether,
+            initialFee: 1 ether,
             initialOwner: 0xe3d25540BA6CED36a0ED5ce899b99B5963f43d3F
         });
     }
