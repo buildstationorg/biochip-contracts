@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 error InvalidTokenId(uint256 tokenId);
 error InsufficientValueToMint();
@@ -14,7 +15,7 @@ error WithdrawalFailed();
 /// @author zxstim
 /// @notice You can use this contract for only the most basic simulation
 /// @dev All function calls are currently implemented without side effects
-contract BioChipKaia is ERC721, Ownable {
+contract BioChipKaia is ERC721, ERC721Enumerable, Ownable {
     uint256 private counter;
     uint256 private fee;
 
@@ -77,6 +78,32 @@ contract BioChipKaia is ERC721, Ownable {
         return string(abi.encodePacked(_baseURI(), json));
     }
 
+    // The following functions are overrides required by Solidity.
+
+    function _update(address to, uint256 tokenId, address auth)
+        internal
+        override(ERC721, ERC721Enumerable)
+        returns (address)
+    {
+        return super._update(to, tokenId, auth);
+    }
+
+    function _increaseBalance(address account, uint128 value)
+        internal
+        override(ERC721, ERC721Enumerable)
+    {
+        super._increaseBalance(account, value);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
+
     /// @notice function to get the balance of the contract
     /// @return current balance of the contract
     function getBalance() public view returns (uint256) {
@@ -95,6 +122,13 @@ contract BioChipKaia is ERC721, Ownable {
         return fee;
     }
 
+    /// @notice function to set the mint fee
+    /// @notice onlyOwner can set the mint fee
+    /// @param newFee as the new fee to mint a token in native token
+    function setFee(uint256 newFee) public onlyOwner {
+        fee = newFee;
+    }
+
     /// @notice function to withdraw the mint fee
     /// @notice onlyOwner can withdraw the mint fee
     function withdrawFee() public onlyOwner {
@@ -104,10 +138,4 @@ contract BioChipKaia is ERC721, Ownable {
         }
     }
 
-    /// @notice function to set the mint fee
-    /// @notice onlyOwner can set the mint fee
-    /// @param newFee as the new fee to mint a token in native token
-    function setFee(uint256 newFee) public onlyOwner {
-        fee = newFee;
-    }
 }
